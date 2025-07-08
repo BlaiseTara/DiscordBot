@@ -14,10 +14,11 @@ const commandsPath = path.join(__dirname, "commands");
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js"));
 
 for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
+    const filePath = path.join(commandsPath, file);
+    const command = await import(`file://${filePath}`);
     commands.push({
-        name: command.data.name,
-        description: command.data.description
+        name: command.default.data.name,
+        description: command.default.data.description
     });
 }
 
