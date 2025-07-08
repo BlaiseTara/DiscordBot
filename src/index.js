@@ -25,13 +25,15 @@ client.once("ready", () => {
     console.log("Bot is online.");
 });
 
-// custom replys
+// Custom Replys
 client.on("messageCreate", (message) => {
     if (message.content.startsWith("hi")) {
         message.channel.send("Hello there!");
     }
 });
 
+
+// Slash Commands
 client.on("interactionCreate", async interaction => {
     if (!interaction.isChatInputCommand()) return;
 

@@ -10,7 +10,7 @@ module.exports = {
 
         await interaction.reply({
             embeds: [{
-                title: "🛠️ Available Commands",
+                title: "Available Commands",
                 description: commandList.join("\n")
             }],
             ephemeral: true
