@@ -65,3 +65,22 @@ client.on("interactionCreate", async interaction => {
 });
 
 client.login(process.env.BOT_TOKEN);
+
+
+
+import http from 'http';
+
+const PORT = process.env.PORT || 3000;
+
+http.createServer((req, res) => {
+    if (req.url === '/ping') {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end('Pong\n');
+    } else {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('Not found\n');
+    }
+}).listen(PORT, () => {
+    console.log(`Ping server running on port ${PORT}`);
+});
+
