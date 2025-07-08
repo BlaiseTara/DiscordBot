@@ -7,7 +7,7 @@ dotenv.config();
 
 const backendUrl = process.env.WEB_URL;
 
-const job = new CronJob('*/1 * * * *', function () {
+const job = new CronJob('*/10 * * * *', function () {
     console.log('Restarting Server');
 
     https.get(backendUrl, (res) => {
