@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     data: {
         name: "help",
         description: "Shows a list of all available commands"

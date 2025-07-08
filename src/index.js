@@ -1,7 +1,18 @@
-const { Client, GatewayIntentBits, Collection } = require("discord.js");
-const fs = require("fs");
-const path = require("path");
-require("dotenv").config();
+import { Client, GatewayIntentBits, Collection } from 'discord.js';
+import fs from 'fs';
+import path from 'path';
+import dotenv from 'dotenv';
+import job from './cron.js';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// start cron job
+job.start();
+
+// ^ the cron job is needed to prevent the server from going into sleep mode
+// remove it if you arent using a poor person's server host
 
 const client = new Client({
     intents: [
@@ -17,9 +28,11 @@ const commandsPath = path.join(__dirname, "commands");
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js"));
 
 for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    client.commands.set(command.data.name, command);
+    const filePath = path.join(commandsPath, file);
+    const command = await import(`file://${filePath}`);
+    client.commands.set(command.default.data.name, command.default);
 }
+
 
 client.once("ready", () => {
     console.log("Bot is online.");
